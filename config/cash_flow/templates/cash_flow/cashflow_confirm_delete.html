@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">Подтверждение удаления</h5>
+    </div>
+
+    <div class="card-body">
+        <p>Вы уверены, что хотите удалить эту запись?</p>
+        <dl class="row">
+            <dt class="col-sm-3">Дата:</dt>
+            <dd class="col-sm-9">{{ object.date|date:"d.m.Y" }}</dd>
+
+            <dt class="col-sm-3">Сумма:</dt>
+            <dd class="col-sm-9">{{ object.amount }} ₽</dd>
+
+            <dt class="col-sm-3">Тип:</dt>
+            <dd class="col-sm-9">{{ object.type }}</dd>
+        </dl>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger">Удалить</button>
+                <a href="{% url 'cash_flow:cashflow_list' %}" class="btn btn-secondary">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

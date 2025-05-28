@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with tab=request.GET.tab|default:"status" %}
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h5 class="mb-0">Управление справочниками</h5>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs mb-4" id="dirTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if tab == 'status' %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#status">Статусы</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if tab == 'types' %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#types">Типы</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if tab == 'categories' %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#categories">Категории</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {% if tab == 'subcategories' %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#subcategories">Подкатегории</button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade {% if tab == 'status' %}show active{% endif %}" id="status">
+                {% include 'cash_flow/directory_tab.html' with object_list=status_list create_url='cash_flow:status_create' update_url='cash_flow:status_update' delete_url='cash_flow:status_delete' name='статус' field='status_name' %}
+            </div>
+            <div class="tab-pane fade {% if tab == 'types' %}show active{% endif %}" id="types">
+                {% include 'cash_flow/directory_tab.html' with object_list=type_list create_url='cash_flow:type_create' update_url='cash_flow:type_update' delete_url='cash_flow:type_delete' name='тип' field='type_name' %}
+            </div>
+            <div class="tab-pane fade {% if tab == 'categories' %}show active{% endif %}" id="categories">
+                {% include 'cash_flow/directory_tab.html' with object_list=category_list create_url='cash_flow:category_create' update_url='cash_flow:category_update' delete_url='cash_flow:category_delete' name='категорию' fields='type,category_name' %}
+            </div>
+            <div class="tab-pane fade {% if tab == 'subcategories' %}show active{% endif %}" id="subcategories">
+                {% include 'cash_flow/directory_tab.html' with object_list=subcategory_list create_url='cash_flow:subcategory_create' update_url='cash_flow:subcategory_update' delete_url='cash_flow:subcategory_delete' name='подкатегорию' fields='category,subcategory_name' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endwith %}
+{% endblock %}

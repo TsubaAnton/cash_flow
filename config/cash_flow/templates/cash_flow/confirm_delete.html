@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">Подтверждение удаления</h5>
+    </div>
+
+    <div class="card-body">
+        <p>Вы уверены, что хотите удалить "{{ object }}"?</p>
+        <p class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Это действие нельзя отменить!</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Да, удалить
+                </button>
+                <a href="{{ success_url|default:'javascript:history.back()' }}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Отмена
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

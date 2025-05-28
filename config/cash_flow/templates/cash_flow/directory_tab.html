@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-between mb-3">
+    <a href="{% url create_url %}" class="btn btn-success btn-sm">
+        <i class="bi bi-plus-lg"></i> Добавить {{ name }}
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {% if fields == 'type,category_name' %}
+                <th>Тип</th>
+                <th>Категория</th>
+                {% elif fields == 'category,subcategory_name' %}
+                <th>Категория</th>
+                <th>Подкатегория</th>
+                {% else %}
+                <th>Название</th>
+                {% endif %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+            <tr>
+                {% if fields == 'type,category_name' %}
+                <td>{{ item.type }}</td>
+                <td>{{ item.category_name }}</td>
+                {% elif fields == 'category,subcategory_name' %}
+                <td>{{ item.category }}</td>
+                <td>{{ item.subcategory_name }}</td>
+                {% else %}
+                <td>{{ item }}</td>
+                {% endif %}
+                <td class="text-end">
+                    <a href="{% url update_url item.pk %}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url delete_url item.pk %}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Удалить {{ name }}?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center">Нет данных</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
